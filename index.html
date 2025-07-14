@@ -79,16 +79,10 @@
   <form id="kalkulator">
     <fieldset>
       <legend>Wybierz kształt tarasu:</legend>
-      <label>
-        <input type="radio" name="ksztalt" value="prostokat" checked>
-        <img src="https://adrianopti.github.io/kalkulator-tarasu/kwadrat.jpg" alt="Prostokąt" class="shape-icon">
-        Kwadrat
-      </label>
-      <label>
-        <input type="radio" name="ksztalt" value="l">
-        <img src="https://adrianopti.github.io/kalkulator-tarasu/L.jpg" alt="Kształt L" class="shape-icon">
-        Kształt L
-      </label>
+      <label><input type="radio" name="ksztalt" value="prostokat" checked><img src="https://adrianopti.github.io/kalkulator-tarasu/kwadrat.jpg" class="shape-icon">Kwadrat</label>
+      <label><input type="radio" name="ksztalt" value="l"><img src="https://adrianopti.github.io/kalkulator-tarasu/L.jpg" class="shape-icon">Kształt L</label>
+      <label><input type="radio" name="ksztalt" value="u"><img src="https://adrianopti.github.io/kalkulator-tarasu/inny.jpg" class="shape-icon">Kształt U</label>
+      <label><input type="radio" name="ksztalt" value="t"><img src="https://adrianopti.github.io/kalkulator-tarasu/wystajacy.jpg" class="shape-icon">Kształt T</label>
     </fieldset>
 
     <fieldset>
@@ -118,7 +112,7 @@
   <script>
     document.querySelectorAll('input[name="ksztalt"]').forEach(k => {
       k.addEventListener("change", function () {
-        document.getElementById("ksztalt-l").style.display = this.value === "l" ? "block" : "none";
+        document.getElementById("ksztalt-l").style.display = ["l", "u", "t"].includes(this.value) ? "block" : "none";
       });
     });
 
@@ -127,10 +121,9 @@
       const plytka = document.querySelector('input[name="plytka"]:checked').value;
       const a = parseFloat(document.getElementById("a").value) || 0;
       const b = parseFloat(document.getElementById("b").value) || 0;
-
       let powierzchnia = a * b;
 
-      if (ksztalt === "l") {
+      if (["l", "u", "t"].includes(ksztalt)) {
         const c = parseFloat(document.getElementById("c").value) || 0;
         const d = parseFloat(document.getElementById("d").value) || 0;
         powierzchnia += c * d;
