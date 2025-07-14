@@ -1,7 +1,4 @@
-from pathlib import Path
 
-# Zawartość pliku HTML z kalkulatorem
-html_content = """
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -9,27 +6,70 @@ html_content = """
   <title>Kalkulator tarasów</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 30px;
+      background-color: #ffffff;
+      color: #333;
+    }
+    h1 {
+      color: #1f4e3d;
+      text-align: center;
     }
     fieldset {
-      margin-bottom: 20px;
-      padding: 15px;
-      border: 1px solid #ccc;
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    legend {
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #1f4e3d;
     }
     label {
-      display: block;
-      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
     }
     input[type="number"] {
-      margin-bottom: 10px;
       width: 100px;
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    input[type="radio"] {
+      transform: scale(1.2);
     }
     .results span {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
+      color: #1f4e3d;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #1f4e3d;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #163b2d;
+    }
+    img.shape-icon {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: #fff;
+      padding: 3px;
     }
   </style>
 </head>
@@ -39,8 +79,16 @@ html_content = """
   <form id="kalkulator">
     <fieldset>
       <legend>Wybierz kształt tarasu:</legend>
-      <label><input type="radio" name="ksztalt" value="prostokat" checked> Prostokąt</label>
-      <label><input type="radio" name="ksztalt" value="l"> Kształt L</label>
+      <label>
+        <input type="radio" name="ksztalt" value="prostokat" checked>
+        <img src="https://adrianopti.github.io/kalkulator-tarasu/prostokat.png" alt="Prostokąt" class="shape-icon">
+        Prostokąt
+      </label>
+      <label>
+        <input type="radio" name="ksztalt" value="l">
+        <img src="https://adrianopti.github.io/kalkulator-tarasu/ksztalt-l.png" alt="Kształt L" class="shape-icon">
+        Kształt L
+      </label>
     </fieldset>
 
     <fieldset>
@@ -97,10 +145,3 @@ html_content = """
   </script>
 </body>
 </html>
-"""
-
-# Zapisanie do pliku
-file_path = Path("/mnt/data/kalkulator-tarasow.html")
-file_path.write_text(html_content, encoding="utf-8")
-
-file_path.name
