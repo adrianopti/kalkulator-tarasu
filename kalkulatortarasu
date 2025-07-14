@@ -1,0 +1,106 @@
+from pathlib import Path
+
+# Zawartość pliku HTML z kalkulatorem
+html_content = """
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator tarasów</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    fieldset {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="number"] {
+      margin-bottom: 10px;
+      width: 100px;
+    }
+    .results span {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kalkulator tarasów</h1>
+
+  <form id="kalkulator">
+    <fieldset>
+      <legend>Wybierz kształt tarasu:</legend>
+      <label><input type="radio" name="ksztalt" value="prostokat" checked> Prostokąt</label>
+      <label><input type="radio" name="ksztalt" value="l"> Kształt L</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Wybierz rozmiar płytki:</legend>
+      <label><input type="radio" name="plytka" value="60x60" checked> 60x60 cm</label>
+      <label><input type="radio" name="plytka" value="120x60"> 120x60 cm</label>
+    </fieldset>
+
+    <fieldset id="wymiary">
+      <legend>Podaj wymiary tarasu (w metrach):</legend>
+      <label>a: <input type="number" step="0.01" id="a"></label>
+      <label>b: <input type="number" step="0.01" id="b"></label>
+      <div id="ksztalt-l" style="display: none;">
+        <label>c: <input type="number" step="0.01" id="c"></label>
+        <label>d: <input type="number" step="0.01" id="d"></label>
+      </div>
+    </fieldset>
+
+    <button type="button" onclick="oblicz()">Oblicz</button>
+  </form>
+
+  <div class="results" style="margin-top: 30px">
+    <p>Ilość płytek: <span id="ilosc"></span></p>
+    <p>Powierzchnia: <span id="powierzchnia"></span> m²</p>
+  </div>
+
+  <script>
+    document.querySelectorAll('input[name="ksztalt"]').forEach(k => {
+      k.addEventListener("change", function () {
+        document.getElementById("ksztalt-l").style.display = this.value === "l" ? "block" : "none";
+      });
+    });
+
+    function oblicz() {
+      const ksztalt = document.querySelector('input[name="ksztalt"]:checked').value;
+      const plytka = document.querySelector('input[name="plytka"]:checked').value;
+      const a = parseFloat(document.getElementById("a").value) || 0;
+      const b = parseFloat(document.getElementById("b").value) || 0;
+
+      let powierzchnia = a * b;
+
+      if (ksztalt === "l") {
+        const c = parseFloat(document.getElementById("c").value) || 0;
+        const d = parseFloat(document.getElementById("d").value) || 0;
+        powierzchnia += c * d;
+      }
+
+      let powierzchniaPlytki = plytka === "60x60" ? 0.36 : 0.72;
+      const ilosc = Math.ceil((powierzchnia / powierzchniaPlytki) * 1.1);
+
+      document.getElementById("powierzchnia").innerText = powierzchnia.toFixed(2);
+      document.getElementById("ilosc").innerText = ilosc;
+    }
+  </script>
+</body>
+</html>
+"""
+
+# Zapisanie do pliku
+file_path = Path("/mnt/data/kalkulator-tarasow.html")
+file_path.write_text(html_content, encoding="utf-8")
+
+file_path.name
